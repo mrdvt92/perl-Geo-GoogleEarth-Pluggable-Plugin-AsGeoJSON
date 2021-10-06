@@ -5,7 +5,7 @@ Geo::GoogleEarth::Pluggable::Plugin::AsGeoJSON - PostgreSQL ST\_AsGeoJSON plugin
 # SYNOPSIS
 
     use Geo::GoogleEarth::Pluggable;
-    use Geo::GoogleEarth::Pluggable::Plugin::AsGeoJSON; #will be runtime loaded
+    use Geo::GoogleEarth::Pluggable::Plugin::AsGeoJSON; #can be runtime loaded
     my $document = Geo::GoogleEarth::Pluggable->new;
     my $object   = $document->AsGeoJSON(name        => $text,
                                         description => $html,
@@ -23,17 +23,19 @@ Parses the string as returned from the PostgreSQL ST\_AsGeoJSON() function as Go
     use Geo::GoogleEarth::Pluggable 0.16; #Polygon
     my $document = Geo::GoogleEarth::Pluggable->new;
     my $database = DBIx::Array::Connect->new->connect('gis');
+
+    #Select data from PostgreSQL
     my @gisdata  = $database->sqlarrayhash(&gis_data_sql);
-    
-    foreach my $row (@gisdata) {
-      $document->AsGeoJSON(%$row);
-    }
-    
+
+    #Add each row as Google Earth document object
+    $document->AsGeoJSON(%$_) foreach @gisdata;
+
+    #Print the Google Earth KML document
     print $document->render;
     
     sub gis_data_sql {
       return qq{
-                 SELECT 'Point'                                                          AS "name", 
+                 SELECT 'Clifton, VA'                                                    AS "name", 
                         ST_AsGeoJSON(ST_GeomFromText('POINT(-77.38670068 38.78025536)')) AS "json"
                };
     }
