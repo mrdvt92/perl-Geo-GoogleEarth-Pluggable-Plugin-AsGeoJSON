@@ -22,10 +22,10 @@ Parses the string as returned from the PostgreSQL ST\_AsGeoJSON() function as Go
     use DBIx::Array::Connect 0.06; #path
     use Geo::GoogleEarth::Pluggable 0.16; #Polygon
     my $document = Geo::GoogleEarth::Pluggable->new;
-    my $database = DBIx::Array::Connect->new->connect('gis');
+    my $database = DBIx::Array::Connect->new->connect('gis'); #gis from database-connections-config.ini
 
     #Select data from PostgreSQL
-    my @gisdata  = $database->sqlarrayhash(&gis_data_sql);
+    my @gisdata  = $database->sqlarrayhash(&gis_data_sql); #isa ({}, {}, ...)
 
     #Add each row as Google Earth document object
     $document->AsGeoJSON(%$_) foreach @gisdata;
@@ -45,10 +45,11 @@ Parses the string as returned from the PostgreSQL ST\_AsGeoJSON() function as Go
 ## AsGeoJSON
 
     $document->AsGeoJSON(
-                         name        => $text,            #see Placemark
-                         description => $html,
-                         json        => $json_string,
-                         style       => $style,
+                         name        => $text,            #for L<Geo::GoogleEarth::Pluggable::Base>
+                         description => $html,            #for L<Geo::GoogleEarth::Pluggable::Base>
+                         json        => $json_string,     #for L<Geo::GoogleEarth::Pluggable::Plugin::AsGeoJSON>
+                         style       => $style,           #for L<Geo::GoogleEarth::Pluggable::Placemark>
+                                                          #see L<Geo::GoogleEarth::Pluggable::Plugin::Styles>
                         );
 
 JSON Example: Point
