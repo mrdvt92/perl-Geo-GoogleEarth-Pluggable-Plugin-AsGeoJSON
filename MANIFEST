@@ -9,4 +9,4 @@ t/999_Junk.t
 lib/Geo/GoogleEarth/Pluggable/Plugin/AsGeoJSON.pm
 perl-Geo-GoogleEarth-Pluggable-Plugin-AsGeoJSON.spec
 scripts/database-connections-config.ini
-scripts/Geo-GoogleEarth-Pluggable-Plugin-AsGeoJSON-example.pl
+scripts/perl-Geo-GoogleEarth-Pluggable-Plugin-AsGeoJSON-example.pl
